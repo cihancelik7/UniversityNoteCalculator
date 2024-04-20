@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mycompany</groupId>
+    <artifactId>UniversityNotesCalculate</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging> <!-- Paketleme türünü JAR olarak belirtiyoruz -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source> <!-- Java sürümünüz -->
+        <maven.compiler.target>21</maven.compiler.target> <!-- Java sürümünüz -->
+       <exec.mainClass>com.mycompany.universitynotescalculate.MainPage</exec.mainClass><!-- Ana sınıfınızın tam yolu -->
+    </properties>
+<dependencies>
+    <!-- Diğer bağımlılıklarınız burada olabilir. -->
+
+    <!-- iText PDF Kütüphanesi için Dependency -->
+    <dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>itext7-core</artifactId>
+        <version>7.1.16</version> <!-- Burada kullandığınız iText sürümüne göre güncelleyin. -->
+        <type>pom</type>
+    </dependency>
+
+    <!-- Projeye ait mevcut bağımlılıklarınız burada devam edecek. -->
+</dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory> <!-- Kaynak dosyalarınızın yolu -->
+                <includes>
+                    <include>**/*</include> <!-- Tüm kaynak dosyaları dahil ediliyor -->
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version> <!-- Kullandığınız maven-jar-plugin sürümü -->
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                             <mainClass>com.mycompany.universitynotescalculate.MainPage</mainClass> <!-- Jar çalıştırıldığında başlatılacak ana sınıf -->
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
