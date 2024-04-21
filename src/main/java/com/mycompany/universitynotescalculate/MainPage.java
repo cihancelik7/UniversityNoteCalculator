@@ -200,6 +200,7 @@ public class MainPage extends javax.swing.JFrame {
         textFieldHwNote = new javax.swing.JTextField();
         lessonName = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         jTextField17.setFont(new java.awt.Font("Myanmar MN", 1, 14)); // NOI18N
         jTextField17.setMinimumSize(new java.awt.Dimension(70, 70));
@@ -276,7 +277,7 @@ public class MainPage extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Lesson", "Vize", "Final", "Homework", "Exam", "Attendance", "Other", "Summary"
+                "Lesson", "Vize", "Final", "Homework", "Exam", "Attendance", "FinalMust", "Summary"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -447,6 +448,15 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setFont(new java.awt.Font("Malayalam MN", 1, 14)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(153, 0, 153));
+        jButton5.setText("Delete");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -535,6 +545,8 @@ public class MainPage extends javax.swing.JFrame {
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 989, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(57, 57, 57))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton5)
+                                    .addGap(18, 18, 18)
                                     .addComponent(jButton3)
                                     .addGap(18, 18, 18)
                                     .addComponent(jButton2))
@@ -638,7 +650,8 @@ public class MainPage extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton5))
                 .addGap(71, 71, 71))
         );
 
@@ -716,12 +729,32 @@ public class MainPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Can not less than %100","",JOptionPane.ERROR_MESSAGE);
         }
         else if(toplam == 100){
-             sumNotes = ((vizeN*vizeP) + (finalN*finalP) + (examN * examP) +(hwN*hwP) + (attandanceN * attandanceP)+(otherN*otherP)) / 100;
+             sumNotes = ((vizeN*vizeP) + (finalN*finalP) + (examN * examP) +(hwN*hwP) + (attandanceN * attandanceP)) / 100;
             sumPercentage = String.valueOf(sumNotes);
+            
+            // Önce kullanıcının girdiği değerler alınıyor ve sayıya çevriliyor.
+float vizeNotu = Float.parseFloat(textFieldVizeNote.getText());
+float vizeYuzdesi = Float.parseFloat(textFieldVizePercentage.getText());
+
+// Geçme notu varsayımı, değiştirebilirsiniz.
+float gecmeNotu = Float.parseFloat(textFieldOtherNote.getText());
+
+// Finalde alınması gereken minimum notu hesapla (Buradaki formül değişebilir).
+float finaldeGerekenNot = (gecmeNotu - (vizeNotu * (vizeYuzdesi / 100))) / (1 - (vizeYuzdesi / 100));
+
+// Sonra hesaplanan final gereken notu 'Other' olarak tabloya ekle
             
             // add to table our values
             DefaultTableModel defaultTableModel = (DefaultTableModel) jTable2.getModel();
-            defaultTableModel.addRow(new Object[]{lessonName.getText(),textFieldVizeNote.getText(),textFieldFinalNote.getText(),textFieldHwNote.getText(),textFieldExamNote.getText(),textFieldAttandanceNote.getText(),textFieldOtherNote.getText(),sumPercentage});
+            defaultTableModel.addRow(new Object[]{
+                lessonName.getText(),
+                textFieldVizeNote.getText(),
+                textFieldFinalNote.getText(),
+                textFieldHwNote.getText(),
+                textFieldExamNote.getText(),
+                textFieldAttandanceNote.getText(),
+                String.format("%.2f", finaldeGerekenNot), // Yeni hesaplanan not buraya ekleniyor
+                sumPercentage});
         }
         jTable2.setShowGrid(true);
         jTable2.setGridColor(Color.blue);
@@ -846,15 +879,30 @@ public class MainPage extends javax.swing.JFrame {
          examP = Integer.valueOf(textFieldExamPercentage.getText());
          attandanceP = Integer.valueOf(textFieldAttandancePercentage.getText());
          otherP = Integer.valueOf(textFieldOtherPercentage.getText());
-             sumNotes = ((vizeN*vizeP) + (finalN*finalP) + (examN * examP) +(hwN*hwP) + (attandanceN * attandanceP)+(otherN*otherP)) / 100;
+             sumNotes = ((vizeN*vizeP) + (finalN*finalP) + (examN * examP) +(hwN*hwP) + (attandanceN * attandanceP)) / 100;
             sumPercentage = String.valueOf(sumNotes);
            model.setValueAt(sumPercentage, i, 7);   
            
        }else{
-           JOptionPane.showMessageDialog(this,"Error");
+           JOptionPane.showMessageDialog(this,"You Should Choose 1 Lesson!!!");
        }
        
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+         try{
+             int selectedRw = jTable2.getSelectedRow();
+              int a = JOptionPane.showConfirmDialog(this, "Are you sure want to Delete Lesson?","Delete",JOptionPane.INFORMATION_MESSAGE);
+        if(a==JOptionPane.YES_OPTION){
+             model.removeRow(selectedRw);
+        }   
+         }catch(Exception e){
+             
+             JOptionPane.showMessageDialog(this, "Didn't chose any lesson!!");
+             
+         }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -896,6 +944,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox10;
     private javax.swing.JCheckBox jCheckBox11;
     private javax.swing.JCheckBox jCheckBox3;
