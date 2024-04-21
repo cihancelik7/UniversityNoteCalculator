@@ -37,6 +37,23 @@ public class MainPage extends javax.swing.JFrame {
     Cell otherCell;
     Cell sumCell;
     Table pTable;
+    float sumNotes;
+    
+    // for update
+     // notes
+        int vizeN ;
+        int finalN;
+        int hwN ;
+        int examN;
+        int attandanceN;
+        int otherN;
+        // percentages
+        int vizeP ;
+        int finalP;
+        int hwP ;
+        int examP ;
+        int attandanceP;
+        int otherP;
     
 
     /**
@@ -182,6 +199,7 @@ public class MainPage extends javax.swing.JFrame {
         textFieldVizeNote = new javax.swing.JTextField();
         textFieldHwNote = new javax.swing.JTextField();
         lessonName = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
 
         jTextField17.setFont(new java.awt.Font("Myanmar MN", 1, 14)); // NOI18N
         jTextField17.setMinimumSize(new java.awt.Dimension(70, 70));
@@ -214,7 +232,7 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Myanmar MN", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Other:");
+        jLabel7.setText("FinalMust:");
 
         jLabel10.setFont(new java.awt.Font("Myanmar MN", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -267,6 +285,11 @@ public class MainPage extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(jTable2);
@@ -414,6 +437,16 @@ public class MainPage extends javax.swing.JFrame {
         lessonName.setMinimumSize(new java.awt.Dimension(70, 70));
         lessonName.setPreferredSize(new java.awt.Dimension(70, 70));
 
+        jButton4.setFont(new java.awt.Font("Myanmar MN", 1, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(153, 0, 153));
+        jButton4.setText("Update");
+        jButton4.setToolTipText("Press button to calculate..");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -482,15 +515,18 @@ public class MainPage extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jCheckBox4))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(textFieldOtherPercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(textFieldOtherPercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textFieldAttandancePercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox5))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(textFieldAttandancePercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox3)
-                                        .addGap(46, 46, 46)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jCheckBox5)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jCheckBox3)
+                                                .addGap(46, 46, 46)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 21, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,22 +574,24 @@ public class MainPage extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(textFieldAttandanceNote, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(textFieldAttandancePercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel6)))
+                                            .addComponent(jLabel6))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(8, 8, 8)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(textFieldOtherPercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(textFieldOtherNote, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel7)))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jCheckBox5))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(17, 17, 17)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(textFieldOtherPercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(textFieldOtherNote, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jCheckBox5))))
+                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel18)
@@ -657,19 +695,19 @@ public class MainPage extends javax.swing.JFrame {
         }
         
         // notes
-        int vizeN = Integer.valueOf(textFieldFinalNote.getText());
-        int finalN = Integer.valueOf(textFieldVizeNote.getText());
-        int hwN = Integer.valueOf(textFieldHwNote.getText());
-        int examN = Integer.valueOf(textFieldExamNote.getText());
-        int attandanceN = Integer.valueOf(textFieldAttandanceNote.getText());
-        int otherN = Integer.valueOf(textFieldOtherNote.getText());
+         vizeN = Integer.valueOf(textFieldFinalNote.getText());
+         finalN = Integer.valueOf(textFieldVizeNote.getText());
+         hwN = Integer.valueOf(textFieldHwNote.getText());
+         examN = Integer.valueOf(textFieldExamNote.getText());
+         attandanceN = Integer.valueOf(textFieldAttandanceNote.getText());
+         otherN = Integer.valueOf(textFieldOtherNote.getText());
         // percentages
-        int vizeP = Integer.valueOf(textFieldFinalPercentage.getText());
-        int finalP = Integer.valueOf(textFieldVizePercentage.getText());
-        int hwP = Integer.valueOf(textFieldHwPercentage.getText());
-        int examP = Integer.valueOf(textFieldExamPercentage.getText());
-        int attandanceP = Integer.valueOf(textFieldAttandancePercentage.getText());
-        int otherP = Integer.valueOf(textFieldOtherPercentage.getText());
+         vizeP = Integer.valueOf(textFieldFinalPercentage.getText());
+         finalP = Integer.valueOf(textFieldVizePercentage.getText());
+         hwP = Integer.valueOf(textFieldHwPercentage.getText());
+         examP = Integer.valueOf(textFieldExamPercentage.getText());
+         attandanceP = Integer.valueOf(textFieldAttandancePercentage.getText());
+         otherP = Integer.valueOf(textFieldOtherPercentage.getText());
         
         float toplam = vizeP + finalP + hwP + examP + attandanceP + otherP;
         if(toplam > 100){
@@ -678,7 +716,7 @@ public class MainPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Can not less than %100","",JOptionPane.ERROR_MESSAGE);
         }
         else if(toplam == 100){
-            float sumNotes = ((vizeN*vizeP) + (finalN*finalP) + (examN * examP) +(hwN*hwP) + (attandanceN * attandanceP)+(otherN*otherP)) / 100;
+             sumNotes = ((vizeN*vizeP) + (finalN*finalP) + (examN * examP) +(hwN*hwP) + (attandanceN * attandanceP)+(otherN*otherP)) / 100;
             sumPercentage = String.valueOf(sumNotes);
             
             // add to table our values
@@ -768,6 +806,56 @@ public class MainPage extends javax.swing.JFrame {
         pdfDocument();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int satirlar = jTable2.getSelectedRow();
+        
+        lessonName.setText(jTable2.getValueAt(satirlar, 0).toString());
+        textFieldVizeNote.setText(jTable2.getValueAt(satirlar, 1).toString());
+        textFieldFinalNote.setText(jTable2.getValueAt(satirlar, 2).toString());
+        textFieldHwNote.setText(jTable2.getValueAt(satirlar, 3).toString());
+        textFieldExamNote.setText(jTable2.getValueAt(satirlar,4).toString());
+        textFieldAttandanceNote.setText(jTable2.getValueAt(satirlar,5).toString());
+        textFieldOtherNote.setText(jTable2.getValueAt(satirlar,6).toString());
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       int i = jTable2.getSelectedRow();
+       DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+       
+       if(i>=0){
+           model.setValueAt(lessonName.getText(), i, 0);
+           model.setValueAt(textFieldVizeNote.getText(), i, 1);
+           model.setValueAt(textFieldFinalNote.getText(), i, 2);
+           model.setValueAt(textFieldHwNote.getText(), i, 3);
+           model.setValueAt(textFieldExamNote.getText(), i, 4);
+           model.setValueAt(textFieldAttandanceNote.getText(), i, 5);
+           model.setValueAt(textFieldOtherNote.getText(), i, 6);
+           
+           // update
+            // notes
+         vizeN = Integer.valueOf(textFieldFinalNote.getText());
+         finalN = Integer.valueOf(textFieldVizeNote.getText());
+         hwN = Integer.valueOf(textFieldHwNote.getText());
+         examN = Integer.valueOf(textFieldExamNote.getText());
+         attandanceN = Integer.valueOf(textFieldAttandanceNote.getText());
+         otherN = Integer.valueOf(textFieldOtherNote.getText());
+        // percentages
+         vizeP = Integer.valueOf(textFieldFinalPercentage.getText());
+         finalP = Integer.valueOf(textFieldVizePercentage.getText());
+         hwP = Integer.valueOf(textFieldHwPercentage.getText());
+         examP = Integer.valueOf(textFieldExamPercentage.getText());
+         attandanceP = Integer.valueOf(textFieldAttandancePercentage.getText());
+         otherP = Integer.valueOf(textFieldOtherPercentage.getText());
+             sumNotes = ((vizeN*vizeP) + (finalN*finalP) + (examN * examP) +(hwN*hwP) + (attandanceN * attandanceP)+(otherN*otherP)) / 100;
+            sumPercentage = String.valueOf(sumNotes);
+           model.setValueAt(sumPercentage, i, 7);   
+           
+       }else{
+           JOptionPane.showMessageDialog(this,"Error");
+       }
+       
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -807,6 +895,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox10;
     private javax.swing.JCheckBox jCheckBox11;
     private javax.swing.JCheckBox jCheckBox3;
