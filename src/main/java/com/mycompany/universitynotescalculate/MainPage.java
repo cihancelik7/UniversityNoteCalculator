@@ -63,6 +63,7 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         closedTextFields();
+        
     }
     public void closedTextFields(){
         textFieldAttandanceNote.setEditable(false);
